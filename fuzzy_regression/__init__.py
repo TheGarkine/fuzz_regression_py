@@ -1,0 +1,7 @@
+from fuzzy_regression.sym_lin_reg import fuz_sym_lin_reg_LP
+from fuzzy_regression.sym_lin_reg import fuz_sym_lin_reg_QP
+from fuzzy_regression.sym_lin_reg import fuz_sym_lin_reg_QP_expert
+from fuzzy_regression.sym_lin_reg import fuz_sym_lin_reg_QP_expert_adv
+from fuzzy_regression.asym_lin_reg import fuz_asym_lin_reg_QP
+
+import fuzzy_regression.utils
