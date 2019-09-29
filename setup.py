@@ -16,7 +16,7 @@ VERSION = "0.0.1"
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["cvxopt"]
+REQUIRES = ["cvxopt", "numpy", "matplotlib"]
 
 setup(
     name=NAME,

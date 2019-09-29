@@ -1,5 +1,7 @@
 import cvxopt
 import numpy as np
+
+
 from fuzzy_regression.utils import cvxopt_solve_qp, lin_reg_QP
 
 

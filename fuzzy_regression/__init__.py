@@ -1,9 +1,18 @@
-from fuzzy_regression.sym_lin_reg import (fuz_sym_lin_reg_LP,
-                                          fuz_sym_lin_reg_QP,
-                                          fuz_sym_lin_reg_QP_expert,
-                                          fuz_sym_lin_reg_QP_expert_adv,
-                                          fuz_asym_lin_reg_QP)
+import os
+import sys
 
-from fuzzy_regression.asym_lin_reg import (fuz_asym_lin_reg_QP)
+from distutils.sysconfig import get_python_lib
 
-import fuzzy_regression.utils
+if os.getenv('VIRTUAL_ENV'):
+    # fix cvxopt dll not found error
+    os.environ['PATH'] += os.pathsep + \
+        (os.path.join(os.environ['VIRTUAL_ENV'], 'Library', 'bin'))
+else:
+    os.environ['PATH'] += os.pathsep + \
+        (os.path.join(get_python_lib(), '..', '..', 'Library', 'bin'))
+
+from fuzzy_regression.linear.asym import (fuz_asym_lin_reg_QP)
+from fuzzy_regression.linear.sym import (fuz_sym_lin_reg_LP,
+                                         fuz_sym_lin_reg_QP,
+                                         fuz_sym_lin_reg_QP_expert,
+                                         fuz_sym_lin_reg_QP_expert_adv)
