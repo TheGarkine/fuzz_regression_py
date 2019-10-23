@@ -2,7 +2,7 @@ import cvxopt
 import numpy as np
 
 
-from fuzzy_regression.utils import cvxopt_solve_qp, lin_reg_QP
+from fuzzy_regression.utils import cvxopt_solve_qp, lin_reg_QP, SymLinearSolution, SymLinearExpertSolution
 
 
 def fuz_sym_lin_reg_LP(list_of_coordinates, h=0, tol=1e-12):
@@ -49,7 +49,7 @@ def fuz_sym_lin_reg_LP(list_of_coordinates, h=0, tol=1e-12):
     b = cvxopt.matrix(b)
 
     res = cvxopt.solvers.lp(c, A, b)
-    return res["x"]
+    return SymLinearSolution(*res["x"])
 
 
 def fuz_sym_lin_reg_QP(list_of_coordinates, h=0, k1=1, k2=1):
@@ -109,7 +109,7 @@ def fuz_sym_lin_reg_QP(list_of_coordinates, h=0, k1=1, k2=1):
         G_buffer.append(row)
         h_buffer.append(-el[n+1])
 
-    #c_j >= 0
+    # c_j >= 0
     for j in range(n+1):
         row = []
         for i in range(n+1):
@@ -125,7 +125,7 @@ def fuz_sym_lin_reg_QP(list_of_coordinates, h=0, k1=1, k2=1):
     G = np.array(G_buffer)
     h = np.array(h_buffer)
 
-    return cvxopt_solve_qp(Q, p, G, h)
+    return SymLinearSolution(*cvxopt_solve_qp(Q, p, G, h))
 
 
 def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1, t=2):
@@ -248,7 +248,7 @@ def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1,
             G_buffer.append(row)
             h_buffer.append(-el[n+1])
 
-    #c_j >= 0
+    # c_j >= 0
     for j in range(n+1):
         row = []
         for i in range(n+1):
@@ -265,7 +265,7 @@ def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1,
     G = np.array(G_buffer)
     h = np.array(h_buffer)
 
-    return cvxopt_solve_qp(Q, p, G, h)
+    return SymLinearExpertSolution(*cvxopt_solve_qp(Q, p, G, h))
 
 
 def fuz_sym_lin_reg_QP_expert(list_of_coordinates, h, k1=1, k2=1):
@@ -327,7 +327,7 @@ def fuz_sym_lin_reg_QP_expert(list_of_coordinates, h, k1=1, k2=1):
         G_buffer.append(row)
         h_buffer.append(-el[n+1])
 
-    #c_j >= 0
+    # c_j >= 0
     for j in range(n+1):
         row = []
         for i in range(n+1):
@@ -343,4 +343,4 @@ def fuz_sym_lin_reg_QP_expert(list_of_coordinates, h, k1=1, k2=1):
     G = np.array(G_buffer)
     h = np.array(h_buffer)
 
-    return cvxopt_solve_qp(Q, p, G, h)
+    return SymLinearSolution(*cvxopt_solve_qp(Q, p, G, h))

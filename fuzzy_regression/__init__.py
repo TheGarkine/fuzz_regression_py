@@ -16,3 +16,6 @@ from fuzzy_regression.linear.sym import (fuz_sym_lin_reg_LP,
                                          fuz_sym_lin_reg_QP,
                                          fuz_sym_lin_reg_QP_expert,
                                          fuz_sym_lin_reg_QP_expert_adv)
+
+from fuzzy_regression.plot.plot2d import (plot, plot_sym_lin, plot_asym_lin)
+from fuzzy_regression.regression import (Regression, RegressionDataType)
