@@ -5,7 +5,7 @@ import numpy as np
 from fuzzy_regression.utils import cvxopt_solve_qp, lin_reg_QP, SymLinearSolution, SymLinearExpertSolution
 
 
-def fuz_sym_lin_reg_LP(list_of_coordinates, h=0, tol=1e-12):
+def fuz_sym_lin_reg_LP(list_of_coordinates, h=0):
     """
     This function optimizes the given list of coordinates in a linear behaviour.
     The last column of the iteratable will be used the criterium analyzed.
@@ -13,7 +13,7 @@ def fuz_sym_lin_reg_LP(list_of_coordinates, h=0, tol=1e-12):
 
     n = (len(list_of_coordinates[0]))-1
 
-    c = [len(list_of_coordinates), 0]  # c0, a0
+    c = [len(list_of_coordinates), 0.0]  # c0, a0
     for i in range(n):
         c.append(sum(list(zip(*list_of_coordinates))[i]))  # c_j
         c.append(0.0)  # a_j
@@ -23,7 +23,7 @@ def fuz_sym_lin_reg_LP(list_of_coordinates, h=0, tol=1e-12):
     b = []
     # lower border must be smaller than value
     for el in list_of_coordinates:
-        constraint = [-(1-h), 1]
+        constraint = [-(1.0-h), 1.]
         for j in range(n):
             constraint.append(float(-el[j]*(1-h)))  # c_j
             constraint.append(float(el[j]))  # a_j
@@ -32,20 +32,30 @@ def fuz_sym_lin_reg_LP(list_of_coordinates, h=0, tol=1e-12):
 
     # upper border must be greater than value
     for el in list_of_coordinates:
-        constraint = [-(1-h), -1]
+        constraint = [-(1.0-h), -1.]
         for j in range(n):
             constraint.append(float(-(1-h)*el[j]))  # c_j
             constraint.append(float(-el[j]))  # a_j
         A.append(constraint)
         b.append(float(-el[n]))
 
-    bounds = []
+    # c > 0 forall c
     for i in range(n+1):
-        bounds.append((0.0, None))  # c
-        bounds.append((None, None))  # a
+        constraint = []
+        for j in range(n+1):
+            if(i == j):
+                constraint.append(-1)
+            else:
+                constraint.append(0)
+            constraint.append(0) #a_i
+        A.append(constraint)
+        b.append(0)
 
     c = cvxopt.matrix(c)
+
+    #Matrix is created in wrong direction since linprog was used
     A = cvxopt.matrix(A).T
+
     b = cvxopt.matrix(b)
 
     res = cvxopt.solvers.lp(c, A, b)
