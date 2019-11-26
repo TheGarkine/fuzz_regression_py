@@ -103,4 +103,5 @@ def fuz_asym_lin_reg_QP(list_of_coordinates, h=0, k1=1, k2=1):
     G = np.array(G_buffer)
     h = np.array(h_buffer)
 
-    return AsymLinearSolution(*cvxopt_solve_qp(Q, p, G, h))
+    res = cvxopt_solve_qp(Q, p, G, h)
+    return AsymLinearSolution(l=res[::3], u=res[1::3], a=res[2::3])

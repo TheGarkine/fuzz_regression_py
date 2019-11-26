@@ -3,10 +3,10 @@ import cvxopt
 import numpy as np
 
 
-SymLinearSolution = collections.namedtuple('SymLinearSolution', ['c0', 'a0', 'c1', 'a1'])
-SymLinearExpertSolution = collections.namedtuple('SymLinearExpertSolution', ['c0', 'a0', 'c1', 'a1', 'e'])
+SymLinearSolution = collections.namedtuple('SymLinearSolution', ['c', 'a'])
+SymLinearExpertSolution = collections.namedtuple('SymLinearExpertSolution', ['c', 'a', 'e'])
 
-AsymLinearSolution = collections.namedtuple('AsymLinearSolution', ['l0', 'u0', 'a0', 'l1', 'u1', 'a1'])
+AsymLinearSolution = collections.namedtuple('AsymLinearSolution', ['l', 'u', 'a'])
 
 
 def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None):
@@ -20,6 +20,7 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None):
     sol = cvxopt.solvers.qp(*args)
     if 'optimal' not in sol['status']:
         return None
+    
     return np.array(sol['x']).reshape((P.shape[1],))
 
 

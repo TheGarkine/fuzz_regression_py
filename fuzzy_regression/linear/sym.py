@@ -53,13 +53,13 @@ def fuz_sym_lin_reg_LP(list_of_coordinates, h=0):
 
     c = cvxopt.matrix(c)
 
-    #Matrix is created in wrong direction since linprog was used
+    # Matrix is created in wrong direction since linprog was used
     A = cvxopt.matrix(A).T
 
     b = cvxopt.matrix(b)
 
     res = cvxopt.solvers.lp(c, A, b)
-    return SymLinearSolution(*res["x"])
+    return SymLinearSolution(c=res['x'][::2], a=res['x'][1::2])
 
 
 def fuz_sym_lin_reg_QP(list_of_coordinates, h=0, k1=1, k2=1):
@@ -135,7 +135,8 @@ def fuz_sym_lin_reg_QP(list_of_coordinates, h=0, k1=1, k2=1):
     G = np.array(G_buffer)
     h = np.array(h_buffer)
 
-    return SymLinearSolution(*cvxopt_solve_qp(Q, p, G, h))
+    res = cvxopt_solve_qp(Q, p, G, h)
+    return SymLinearSolution(c=res[::2], a=res[1::2])
 
 
 def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1, t=2):
@@ -275,7 +276,8 @@ def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1,
     G = np.array(G_buffer)
     h = np.array(h_buffer)
 
-    return SymLinearExpertSolution(*cvxopt_solve_qp(Q, p, G, h))
+    res = cvxopt_solve_qp(Q, p, G, h)
+    return SymLinearExpertSolution(c=res[:-1:2], a=res[1::2], e=res[-1])
 
 
 def fuz_sym_lin_reg_QP_expert(list_of_coordinates, h, k1=1, k2=1):
@@ -353,4 +355,5 @@ def fuz_sym_lin_reg_QP_expert(list_of_coordinates, h, k1=1, k2=1):
     G = np.array(G_buffer)
     h = np.array(h_buffer)
 
-    return SymLinearSolution(*cvxopt_solve_qp(Q, p, G, h))
+    res = cvxopt_solve_qp(Q, p, G, h)
+    return SymLinearSolution(c=res[::2], a=res[1::2])

@@ -13,17 +13,16 @@ def prepare_plot(labels=None):
     plt.ylabel('y' if not len(labels) > 1 else labels[1], fontsize=18)
 
 
-def plot(list_of_coordinates, a0, a1, u0, u1, l0=None, l1=None, e=None, h=None, labels=None):
+def plot(list_of_coordinates, a, u, l=None, e=None, h=None, labels=None):
     X, Y = zip(*list_of_coordinates)
 
-    if not l0 or not l1:
-        l0 = u0
-        l1 = u1
+    if l is None:
+        l = u
 
-    fuzzy_regressed_expectancy = [a1*x + a0 for x in X]
+    fuzzy_regressed_expectancy = [a[1]*x + a[0] for x in X]
 
-    border_lower = [a1*x + a0 - (l0 + l1*x) for x in X]
-    border_upper = [a1*x + a0 + (u0 + u1*x) for x in X]
+    border_lower = [a[1]*x + a[0] - (l[0] + l[1]*x) for x in X]
+    border_upper = [a[1]*x + a[0] + (u[0] + u[1]*x) for x in X]
 
     prepare_plot(labels)
 
@@ -36,8 +35,8 @@ def plot(list_of_coordinates, a0, a1, u0, u1, l0=None, l1=None, e=None, h=None, 
         if h is None:
             h = 0
 
-        border_lower_e = [a1*x + a0 - (1-h)*(l0 + l1*x) - e for x in X]
-        border_upper_e = [a1*x + a0 + (1-h)*(u0 + u1*x) + e for x in X]
+        border_lower_e = [a[1]*x + a[0] - (1-h)*(l[0] + l[1]*x) - e for x in X]
+        border_upper_e = [a[1]*x + a[0] + (1-h)*(u[0] + u[1]*x) + e for x in X]
 
         plt.plot(X, border_lower_e, '--')
         plt.plot(X, border_upper_e, '--')
@@ -50,11 +49,8 @@ def plot_sym_lin(regression, **kwargs):
         return plot(
             regression.data,
 
-            regression.solution.a0,
-            regression.solution.a1,
-
-            regression.solution.c0,
-            regression.solution.c1,
+            regression.solution.a,
+            regression.solution.c,
 
             e=regression.solution.e,
 
@@ -63,11 +59,8 @@ def plot_sym_lin(regression, **kwargs):
         return plot(
             regression.data,
 
-            regression.solution.a0,
-            regression.solution.a1,
-
-            regression.solution.c0,
-            regression.solution.c1,
+            regression.solution.a,
+            regression.solution.c,
 
             **kwargs)
 
@@ -76,13 +69,8 @@ def plot_asym_lin(regression, **kwargs):
     return plot(
         regression.data,
 
-        regression.solution.a0,
-        regression.solution.a1,
-
-        regression.solution.u0,
-        regression.solution.u1,
-
-        regression.solution.l0,
-        regression.solution.l1,
+        regression.solution.a,
+        regression.solution.u,
+        regression.solution.l,
 
         **kwargs)

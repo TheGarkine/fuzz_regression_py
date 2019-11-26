@@ -12,10 +12,15 @@ if __name__ == "__main__":
     reg = Regression.of(example2)
 
     # sym
+    print('sym.lin.LP')
     reg.symmetric.linear_LP().plot().show()
+    print('sym.lin.QP')
     reg.symmetric.linear_QP().plot().show()
+    print('sym.lin.QP_exp_adv')
     reg.symmetric.linear_QP_expert_adv(example2_expert).plot().show()
+    print('sym.lin.QP_exp')
     reg.symmetric.linear_QP_expert(example2_expert).plot().show()
 
     # asym
+    print('asym.lin.QP')
     reg.asymmetric.linear_QP().plot().show()
