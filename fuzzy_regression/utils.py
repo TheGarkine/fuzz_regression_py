@@ -7,6 +7,7 @@ SymLinearSolution = collections.namedtuple('SymLinearSolution', ['c', 'a'])
 SymLinearExpertSolution = collections.namedtuple('SymLinearExpertSolution', ['c', 'a', 'e'])
 
 AsymLinearSolution = collections.namedtuple('AsymLinearSolution', ['l', 'u', 'a'])
+AsymLinearExpertSolution = collections.namedtuple('AsymLinearExpertSolution', ['l', 'u', 'a','e_l','e_u'])
 
 
 def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None):

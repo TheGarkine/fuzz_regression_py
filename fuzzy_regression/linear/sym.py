@@ -269,7 +269,7 @@ def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1,
             else:
                 row.append(0.)
                 row.append(0.)
-        row.append(0.)
+        row.append(0.) # e
         G_buffer.append(row)
         h_buffer.append(0.)
 
