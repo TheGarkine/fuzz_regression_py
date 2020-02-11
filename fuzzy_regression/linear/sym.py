@@ -169,21 +169,12 @@ def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1,
 
     sum_matrix = []
     # caching sum to access later
-    if h is None:
-        for x in range(n+2):
-            row = []
-            for y in range(n+2):
-                row.append(float(sum([i[x]*i[y]
-                                      for num, i in enumerate(new_list)])))
-            sum_matrix.append(row)
-            h = [0. for _ in range(p)]
-    else:
-        for x in range(n+2):
-            row = []
-            for y in range(n+2):
-                row.append(float(sum([i[x]*i[y]*h[num]
-                                      for num, i in enumerate(new_list)])))
-            sum_matrix.append(row)
+    for x in range(n+2):
+        row = []
+        for y in range(n+2):
+            row.append(float(sum([i[x]*i[y]
+                                    for num, i in enumerate(new_list)])))
+        sum_matrix.append(row)
 
     Q_matrix = []
     for j in range(n+1):
@@ -225,7 +216,7 @@ def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1,
             # lower then upper
             row = []
             for j in range(n+1):
-                row.append(-(1-h[num])*el[j])  # c
+                row.append(-(1-h)*el[j])  # c
                 row.append(el[j])  # a
             row.append(0.)  # e
             G_buffer.append(row)
@@ -234,7 +225,7 @@ def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1,
             # higher then lower
             row = []
             for j in range(n+1):
-                row.append(-(1-h[num])*el[j])  # c
+                row.append(-(1-h)*el[j])  # c
                 row.append(-el[j])  # a
             row.append(0.)  # e
             G_buffer.append(row)
@@ -244,7 +235,7 @@ def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1,
             # lower then upper + e
             row = []
             for j in range(n+1):
-                row.append(-(1-h[num])*el[j])
+                row.append(-(1-h)*el[j])
                 row.append(el[j])
             row.append(-1.)
             G_buffer.append(row)
@@ -253,7 +244,7 @@ def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1,
             # higher then lower + e
             row = []
             for j in range(n+1):
-                row.append(-(1-h[num])*el[j])
+                row.append(-(1-h)*el[j])
                 row.append(-el[j])
             row.append(-1.)
             G_buffer.append(row)
