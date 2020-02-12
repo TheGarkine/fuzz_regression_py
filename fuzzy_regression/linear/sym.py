@@ -139,7 +139,7 @@ def fuz_sym_lin_reg_QP(list_of_coordinates, h=0, k1=1, k2=1):
     return SymLinearSolution(c=res[::2], a=res[1::2])
 
 
-def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1, t=2):
+def fuz_sym_lin_reg_QP_expert_adv(list_of_coordinates, h=0, k1=1, k2=1, k3=1, t=2):
     n = len(list_of_coordinates[0])-1
     p = len(list_of_coordinates)
 

@@ -106,7 +106,7 @@ def fuz_asym_lin_reg_QP(list_of_coordinates, h=0, k1=1, k2=1):
     res = cvxopt_solve_qp(Q, p, G, h)
     return AsymLinearSolution(l=res[::3], u=res[1::3], a=res[2::3])
 
-def fuz_asym_lin_reg_QP_expert_adv(list_of_coordinates, h=None, k1=1, k2=1, k3=1, t=2):
+def fuz_asym_lin_reg_QP_expert_adv(list_of_coordinates, h=0, k1=1, k2=1, k3=1, t=2):
     n = len(list_of_coordinates[0])-1
     p = len(list_of_coordinates)
 
