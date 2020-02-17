@@ -79,7 +79,7 @@ def fuz_asym_lin_reg_QP(list_of_coordinates, h=0, k1=1, k2=1):
         row_u = []  # l
         row_l = []  # u
         for i in range(n+1):
-            if not i == j:
+            if i == j:
                 row_l.append(-1.)
                 row_l.append(0.)
                 row_l.append(0.)
@@ -250,7 +250,7 @@ def fuz_asym_lin_reg_QP_expert_adv(list_of_coordinates, h=0, k1=1, k2=1, k3=1, t
         row_u = []  # l
         row_l = []  # u
         for i in range(n+1):
-            if not i == j:
+            if i == j:
                 row_l.append(-1.)
                 row_l.append(0.)
                 row_l.append(0.)
